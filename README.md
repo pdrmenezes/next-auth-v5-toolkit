@@ -15,3 +15,4 @@
 - Tweaking NextAuth Session, Callbacks & Events
 - Shadcn UI
 - Edit profile (update email, password, roles & turning 2FA on and off)
+- Neon Postgres Serverless DB
