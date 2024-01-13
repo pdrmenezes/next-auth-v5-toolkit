@@ -17,7 +17,9 @@ export const {
     // so the session token is identical to the token returned by the jwt callback
     // and we can customize the session object as well as the token inside the jwt callback to return whatever we want, for instance, add the isNewUser property (e.g.: token.isNewUser = true)
     async session({ session, user, token }) {
-      session.user.customField = token.customField;
+      if (session.user) {
+        session.user.customField = token.customField;
+      }
       return session;
     },
 
