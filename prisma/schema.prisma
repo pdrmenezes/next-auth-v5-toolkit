@@ -30,6 +30,11 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -37,5 +42,10 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
+  role          UserRole  @default(USER)
   accounts      Account[]
 }
+
+// 'npx prisma generate' to generate the migrations
+// 'npx prisma db push' to sync the changes with the external db
+// 'npx prisma migrate reset' resets the db to an empty state
