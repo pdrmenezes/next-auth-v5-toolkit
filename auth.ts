@@ -16,6 +16,7 @@ export const {
     // the session callback uses the token from the jwt callback to get the session and session info
     // so the session token is identical to the token returned by the jwt callback
     // and we can customize the session object as well as the token inside the jwt callback to return whatever we want, for instance, add the isNewUser property (e.g.: token.isNewUser = true)
+    // now in server or client components we'll have access to the user id we grabbed from the token
     async session({ session, user, token }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
