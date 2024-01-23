@@ -1,8 +1,9 @@
-import NextAuth from "next-auth";
+import NextAuth, { type Session, type User } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
 import authConfig from "@/auth.config";
 import { getUserById } from "@/data/user";
+import { JWT } from "next-auth/jwt";
 
 export const {
   handlers: { GET, POST },
@@ -19,11 +20,11 @@ export const {
     // And we can customize the session object as well as the token inside the jwt callback to return whatever we want, for instance, add the isNewUser property (e.g.: token.isNewUser = true)
     // Now in server or client components we'll have access to the user id we grabbed from the token
     // We'll also extend the session to get access to the new userRole field we added to the user table inside the database
-    async session({ session, user, token }) {
-      if (token.sub && session.user) {
-        session.user.id = token.sub;
+    async session({ session, user, token }: {session: Session, user?: User, token?: JWT}) {
+      if (token && token.sub && session.user) {
+        session.user.id = token.sub; 
       }
-      if (token.role && session.user) {
+      if (token && token.role && session.user) {
         session.user.role = token.role;
       }
       return session;
