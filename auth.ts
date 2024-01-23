@@ -12,9 +12,16 @@ export const {
   signOut,
 } = NextAuth({
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      return true;
-    },
+    // quick way to handle signIn behavior such as not allow a user with email still not verified to login
+    // async signIn({ user, account, profile, email, credentials }) {
+    //   if(user.id){
+    //     const userExists = await getUserById(user.id);
+    //     if (!userExists || !userExists.emailVerified) return false;
+    //   }
+      
+    //   return true;
+    // },
+
     // The session callback uses the token from the jwt callback to get the session and session info
     // So the session token is identical to the token returned by the jwt callback
     // And we can customize the session object as well as the token inside the jwt callback to return whatever we want, for instance, add the isNewUser property (e.g.: token.isNewUser = true)
