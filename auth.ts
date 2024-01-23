@@ -18,7 +18,7 @@ export const {
     //     const userExists = await getUserById(user.id);
     //     if (!userExists || !userExists.emailVerified) return false;
     //   }
-      
+
     //   return true;
     // },
 
@@ -27,9 +27,9 @@ export const {
     // And we can customize the session object as well as the token inside the jwt callback to return whatever we want, for instance, add the isNewUser property (e.g.: token.isNewUser = true)
     // Now in server or client components we'll have access to the user id we grabbed from the token
     // We'll also extend the session to get access to the new userRole field we added to the user table inside the database
-    async session({ session, user, token }: {session: Session, user?: User, token?: JWT}) {
+    async session({ session, user, token }: { session: Session; user?: User; token?: JWT }) {
       if (token && token.sub && session.user) {
-        session.user.id = token.sub; 
+        session.user.id = token.sub;
       }
       if (token && token.role && session.user) {
         session.user.role = token.role;
