@@ -1,5 +1,6 @@
 "use client";
 import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -13,6 +14,10 @@ import { FormSuccess } from "@/components/form-success";
 import { login } from "@/actions/login";
 
 export function LoginForm() {
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different signIn method" : "";
+
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -31,8 +36,8 @@ export function LoginForm() {
 
     startTransition(() => {
       login(formData).then((response) => {
-        setError(response.error);
-        setSuccess(response.success);
+        setError(response?.error);
+        setSuccess(response?.success);
       });
     });
   };
@@ -74,7 +79,7 @@ export function LoginForm() {
               )}
             />
           </div>
-          <FormError message={error} />
+          <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <Button type="submit" className="w-full" disabled={isPending}>
             Login
