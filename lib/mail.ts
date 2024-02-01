@@ -7,6 +7,7 @@ export async function sendVerificationEmail(email: string, token: string) {
   const confirmLink = `${BASE_URL}/auth/new-verification?token=${token}`;
 
   await resend.emails.send({
+    // before domain verification it has to be resend's email
     from: "onboarding@resend.dev",
     to: email,
     subject: "Confirm your email",
