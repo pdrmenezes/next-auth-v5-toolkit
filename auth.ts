@@ -24,6 +24,17 @@ export const {
     },
   },
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider !== "credentials") return true;
+
+      const userExists = await getUserById(user.id!);
+
+      // prevent signIn without verification email
+      if (!userExists?.emailVerified) return false;
+
+      return true;
+    },
+
     // quick way to handle signIn behavior such as not allow a user with email still not verified to login
     // async signIn({ user, account, profile, email, credentials }) {
     //   if(user.id){
