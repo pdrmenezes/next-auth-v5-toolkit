@@ -25,6 +25,7 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {
+      // allow signIn via OAuth methods because email is already verified
       if (account?.provider !== "credentials") return true;
 
       const userExists = await getUserById(user.id!);
