@@ -3,7 +3,7 @@ import { useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { z } from "zod";
 import { LoginSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
