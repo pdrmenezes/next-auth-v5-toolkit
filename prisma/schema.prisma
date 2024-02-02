@@ -55,6 +55,15 @@ model VerificationToken {
   @@unique([email, token])
 }
 
+model ResetPasswordToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
 // 'npx prisma generate' to generate the migrations
 // 'npx prisma db push' to sync the changes with the external db
 // 'npx prisma migrate reset' resets the db to an empty state
