@@ -9,7 +9,7 @@ export default function SettingsPage() {
     logout();
   };
   return (
-    <div>
+    <div className="bg-white p-10 rounded-xl">
       <h1>Settings Page</h1>
       <p>session info: {JSON.stringify(user)}</p>
       <button className="p-2 outline" onClick={onClick}>
