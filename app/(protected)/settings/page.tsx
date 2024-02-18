@@ -1,11 +1,12 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { logout } from "@/actions/logout";
+import { useSession } from "next-auth/react";
 
 export default function SettingsPage() {
   const session = useSession();
   const onClick = () => {
-    signOut();
+    logout();
   };
   return (
     <div>
