@@ -36,7 +36,7 @@ export default function SettingsPage() {
       password: undefined,
       newPassword: undefined,
       role: user?.role || undefined,
-      isTwoFactorEnabled: user?.isTwoFactorEnabled,
+      isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
     },
   });
 
@@ -45,9 +45,11 @@ export default function SettingsPage() {
       updateSettings(data)
         .then((data) => {
           if (data.error) {
+            setSuccess(undefined);
             setError(data.error);
           }
           if (data.success) {
+            setError(undefined);
             setSuccess(data.success);
             update();
           }
