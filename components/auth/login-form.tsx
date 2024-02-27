@@ -16,12 +16,13 @@ import Link from "next/link";
 
 export function LoginForm() {
   const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || undefined;
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different signIn method" : "";
 
   const [shouldShowTwoFactor, setShouldShowTwoFactor] = useState(false);
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -33,11 +34,11 @@ export function LoginForm() {
   });
 
   const onSubmit = (formData: z.infer<typeof LoginSchema>) => {
-    setError("");
-    setSuccess("");
+    setError(undefined);
+    setSuccess(undefined);
 
     startTransition(() => {
-      login(formData)
+      login(formData, callbackUrl)
         .then((response) => {
           if (response?.error) {
             form.reset();
