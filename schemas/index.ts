@@ -27,3 +27,7 @@ export const NewPasswordSchema = z.object({
     .string({ required_error: "Password is required", invalid_type_error: "Are you sure that's an email?" })
     .min(6, { message: "Passwords should be at least 6 characters" }),
 });
+
+export const SettingsSchema = z.object({
+  name: z.optional(z.string()),
+});
