@@ -15,7 +15,7 @@ export default function Home() {
         <h1 className={cn("text-6xl font-semibold text-white drop-shadow-md", font.className)}>🔐 Auth</h1>
         <p className="text-white text-lg">A simple auth service</p>
         <div>
-          <LoginButton>
+          <LoginButton mode="modal" asChild>
             <Button variant="secondary" size="lg">
               Sign In
             </Button>
