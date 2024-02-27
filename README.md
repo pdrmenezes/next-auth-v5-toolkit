@@ -1,5 +1,7 @@
 # NextAuth v5 reference project
 
+You can find all the steps documented through [commits](https://github.com/pdrmenezes/next-auth-v5-toolkit/commits/main/)
+
 - NextAuth v5
 - Login with credentials
 - Login with social providers (Google, Github)

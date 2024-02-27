@@ -5,6 +5,7 @@ import authConfig from "@/auth.config";
 import { getUserById } from "@/data/user";
 import { JWT } from "next-auth/jwt";
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
+import { getAccountByUserId } from "./data/account";
 
 export const {
   handlers: { GET, POST },
@@ -64,6 +65,14 @@ export const {
       if (token && token.role && session.user) {
         session.user.role = token.role;
       }
+
+      if (session.user) {
+        session.user.isTwoFactorEnabled = token?.isTwoFactorEnabled as boolean;
+        session.user.name = token?.name;
+        session.user.email = token?.email;
+        session.user.isOAuth = token?.isOAuth as boolean;
+      }
+
       return session;
     },
 
@@ -73,7 +82,15 @@ export const {
       if (!token.sub) return token;
       const userExists = await getUserById(token.sub);
       if (!userExists) return token;
+
+      const account = await getAccountByUserId(userExists.id);
+
+      token.name = userExists.name;
+      token.email = userExists.email;
       token.role = userExists.role;
+      token.isTwoFactorEnabled = userExists.isTwoFactorEnabled;
+      token.isOAuth = !!account;
+
       return token;
     },
   },
