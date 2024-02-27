@@ -7,6 +7,7 @@ import { getUserByEmail, getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
+import bcrypt from "bcryptjs";
 
 export async function updateSettings(values: z.infer<typeof SettingsSchema>) {
   const user = await currentUser();
@@ -41,6 +42,17 @@ export async function updateSettings(values: z.infer<typeof SettingsSchema>) {
     await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
     return { success: "Verification email successfully sent." };
+  }
+
+  if (values.password && values.newPassword && userExists.password) {
+    const passwordsMatch = await bcrypt.compare(values.password, userExists.password);
+    if (!passwordsMatch) {
+      return { error: "Incorrect password" };
+    }
+    const hashedNewPassword = await bcrypt.hash(values.newPassword, 10);
+    values.password = hashedNewPassword;
+    // to be sure not to send a field that doesn't exist on the database
+    values.newPassword = undefined;
   }
 
   await db.user.update({
