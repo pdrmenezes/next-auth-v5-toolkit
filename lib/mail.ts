@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 export async function sendTwoFactorTokenEmail(email: string, token: string) {
   await resend.emails.send({
