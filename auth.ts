@@ -67,7 +67,10 @@ export const {
 
       if (session.user) {
         session.user.isTwoFactorEnabled = token?.isTwoFactorEnabled as boolean;
+        session.user.name = token?.name;
+        session.user.email = token?.email;
       }
+
       return session;
     },
 
@@ -77,6 +80,9 @@ export const {
       if (!token.sub) return token;
       const userExists = await getUserById(token.sub);
       if (!userExists) return token;
+
+      token.name = userExists.name;
+      token.email = userExists.email;
       token.role = userExists.role;
       token.isTwoFactorEnabled = userExists.isTwoFactorEnabled;
 
